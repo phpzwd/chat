@@ -1,0 +1,19 @@
+{
+    "name": "phpzwd/chat",
+    "description": "test",
+    "type": "library",
+    "license": "Apache-2.0",
+    "autoload": {
+        "psr-4": {
+            "Phpzwd\\Chat\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "张未东",
+            "email": "boyphp@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
