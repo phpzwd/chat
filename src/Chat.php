@@ -2,35 +2,35 @@
 
 namespace Phpzwd\Chat;
 
-use Phpzwd\Chat\Exceptions\InvalidArgumentException;
-
 class Chat
 {
-    protected string $app_id;
-    protected string $source;
-    protected string $base_url;
+    private array $configs = [
+        'base_url' => 'https://chat.ibisaas.com/#/client',
+        'app_id' => '',
+        'source' => 'pc',
+    ];
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \Exception
      */
-    public function __construct(string $base_url, string $app_id, string $source)
+    public function __construct(array $config)
     {
-        if (empty($base_url) || empty($app_id) || empty($source)) {
-            throw new InvalidArgumentException('All parameters must be non-empty strings.');
+        if (empty($config['app_id'])) {
+            throw new \Exception('app_id 不能为空');
         }
 
-        $this->base_url = rtrim($base_url, '?');
-        $this->app_id = $app_id;
-        $this->source = $source;
+        $this->configs = array_merge($this->configs, $config);
     }
 
+    /**
+     * 获取聊天地址.
+     */
     public function getUrl(): string
     {
-        $params = [
-            'app_id' => $this->app_id,
-            'source' => $this->source,
-        ];
+        $baseUrl = trim($this->configs['base_url'], '?');
+        $params = $this->configs;
+        unset($params['base_url']);
 
-        return $this->base_url.'?'.http_build_query($params);
+        return $baseUrl.'?'.http_build_query($params);
     }
 }
